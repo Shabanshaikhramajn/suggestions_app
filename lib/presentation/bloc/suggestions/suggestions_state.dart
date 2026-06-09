@@ -1,33 +1,40 @@
-import 'package:chat_app/data/models/suggestion_model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:chat_app/domain/entity/suggestions_entity.dart';
 
-class SuggestionsState {
-  final List<SuggestionModel> suggestions;
-  final bool isLoading;
-  final int page;
-  final bool hasNext;
+enum SuggestionStatus {
+  initial,
+  loading,
+  success,
+  failure,
+}
 
-  SuggestionsState({
+class SuggestionState extends Equatable {
+  final SuggestionStatus status;
+  final List<Suggestion> suggestions;
+  final bool hasReachedMax;
+
+  const SuggestionState({
+    this.status = SuggestionStatus.initial,
     this.suggestions = const [],
-    this.isLoading = false,
-    this.page = 1,
-    this.hasNext = true,
+    this.hasReachedMax = false,
   });
 
-  // factory SuggestionsState.initial() {
-  //   return SuggestionsState(suggestions: [], isLoading: false, error: null);
-  // }
-
-  SuggestionsState copyWith({
-    List<SuggestionModel>? suggestions,
-    bool? isLoading,
-    bool? hasNext,
-    int? page
+  SuggestionState copyWith({
+    SuggestionStatus? status,
+    List<Suggestion>? suggestions,
+    bool? hasReachedMax,
   }) {
-    return SuggestionsState(
+    return SuggestionState(
+      status: status ?? this.status,
       suggestions: suggestions ?? this.suggestions,
-      isLoading: isLoading ?? this.isLoading,
-      hasNext: hasNext ?? this.hasNext,
-      page: page ?? this.page
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
     );
   }
+
+  @override
+  List<Object> get props => [
+        status,
+        suggestions,
+        hasReachedMax,
+      ];
 }

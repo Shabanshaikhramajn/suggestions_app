@@ -1,14 +1,20 @@
 import 'package:chat_app/presentation/bloc/chat/chat_bloc.dart';
-import 'package:chat_app/presentation/screen/chat_screen.dart';
+import 'package:chat_app/presentation/bloc/navigation/navigation_bloc.dart';
+import 'package:chat_app/presentation/screen/bottom_sheet_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(
-    MultiBlocProvider(providers: [
-      BlocProvider(create: (_)=> ChatBloc())
-    ], child: const MyApp())
-    );
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => NavigationBloc()),
+        BlocProvider(create: (_) => ChatBloc()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-       home:  ChatScreen ()
+      home: MainScreen(),
     );
   }
 }
