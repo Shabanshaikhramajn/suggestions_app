@@ -1,3 +1,4 @@
+import 'package:chat_app/core/commons/app_constants.dart';
 import 'package:chat_app/data/models/suggestion_model.dart';
 
 abstract class SuggestionRemoteDataSource {
@@ -17,14 +18,26 @@ class SuggestionRemoteDataSourceImpl
   }) async {
     await Future.delayed(const Duration(seconds: 1));
 
-    return List.generate(limit, (index) {
-      final id = ((page - 1) * limit) + index + 1;
+    final startIndex = (page - 1) * limit;
 
-      return SuggestionModel(
-        id: id,
-        title: 'Suggestion $id',
-        description: 'Description for suggestion $id',
-      );
-    });
+    if (startIndex >= AppConstants.mockSuggestions.length) {
+      return [];
+    }
+
+    final endIndex =
+    (startIndex + limit).clamp(0, AppConstants.mockSuggestions.length);
+
+    return AppConstants.mockSuggestions
+        .sublist(startIndex, endIndex)
+        .asMap()
+        .entries
+        .map(
+          (entry) => SuggestionModel(
+        id: startIndex + entry.key + 1,
+        title: entry.value['title']!,
+        description: entry.value['description']!,
+      ),
+    )
+        .toList();
   }
 }

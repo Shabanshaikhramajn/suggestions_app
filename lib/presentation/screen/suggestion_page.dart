@@ -19,9 +19,7 @@ class _SuggestionPageState
 
   @override
   void initState() {
-
-    context.read<SuggestionBloc>()
-      .add(SuggestionFetched());
+    super.initState();
 
     _scrollController.addListener(_onScroll);
   }
