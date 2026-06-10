@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  final String? initialMessage;
+
+  const ChatScreen({
+    super.key,
+    this.initialMessage,
+  });
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -14,6 +19,15 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.initialMessage != null) {
+      _messageController.text = widget.initialMessage!;
+    }
+  }
 
   @override
   void dispose() {
@@ -45,19 +59,47 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Smart Assistant"), centerTitle: true),
+   return BlocListener<ChatBloc, ChatState>(
+        listenWhen: (previous, current) =>
+        previous.messages.length !=
+            current.messages.length,
+        listener: (context, state) {
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) {
+
+            if (_scrollController.hasClients) {
+              _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: const Duration(
+                  milliseconds: 300,
+                ),
+                curve: Curves.easeOut,
+              );
+            }
+          });
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("Smart Assistant"),
+            centerTitle: true,
+          ),
       body: Column(
         children: [
           Expanded(
             child: BlocBuilder<ChatBloc, ChatState>(
               builder: (context, state) {
-                if (state.messages.isEmpty) {
-                  return const Center(child: Text("Start Chatting"));
+                if (state.messages.isEmpty &&
+                    !state.isLoading) {
+                  return const Center(
+                    child: Text("Start Chatting"),
+                  );
                 }
                 return ListView.builder(
+                  controller: _scrollController,
+                  itemCount: state.messages.length +
+                      (state.isLoading ? 1 : 0),
                   itemBuilder: (context, index) {
-                    if (state.isLoading && index == state.messages.length) {
+                    if (index == state.messages.length) {
                       return const Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
@@ -122,6 +164,6 @@ class _ChatScreenState extends State<ChatScreen> {
           const SizedBox(height: 40),
         ],
       ),
-    );
+    ));
   }
 }

@@ -17,3 +17,10 @@ class SendMessage extends ChatEvent {
 
 class LoadChatHistory extends ChatEvent {}
 
+
+class PrefillMessage extends ChatEvent {
+  final String message;
+
+  const PrefillMessage(this.message);
+}
+class ClearDraft extends ChatEvent {}

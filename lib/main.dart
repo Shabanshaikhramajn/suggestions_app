@@ -1,4 +1,5 @@
 import 'package:chat_app/core/di/service_locator.dart';
+import 'package:chat_app/core/routes/router_navigation.dart';
 import 'package:chat_app/data/datasource/assistant_remote_data_source.dart';
 import 'package:chat_app/presentation/bloc/chat/chat_bloc.dart';
 import 'package:chat_app/presentation/bloc/navigation/navigation_bloc.dart';
@@ -41,11 +42,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Suggestions App',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: MainScreen(),
+      routerConfig: appRouter
     );
   }
 }

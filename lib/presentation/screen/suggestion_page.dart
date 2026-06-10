@@ -1,19 +1,23 @@
+import 'package:chat_app/core/routes/app_routes.dart';
+import 'package:chat_app/presentation/bloc/chat/chat_bloc.dart';
+import 'package:chat_app/presentation/bloc/chat/chat_event.dart';
 import 'package:chat_app/presentation/bloc/suggestions/suggestions_bloc.dart';
 import 'package:chat_app/presentation/bloc/suggestions/suggestions_event.dart';
 import 'package:chat_app/presentation/bloc/suggestions/suggestions_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-class SuggestionPage extends StatefulWidget {
-  const SuggestionPage({super.key});
+class SuggestionScreen extends StatefulWidget {
+  const SuggestionScreen({super.key});
 
   @override
-  State<SuggestionPage> createState() =>
-      _SuggestionPageState();
+  State<SuggestionScreen> createState() =>
+      _SuggestionScreenState();
 }
 
-class _SuggestionPageState
-    extends State<SuggestionPage> {
+class _SuggestionScreenState
+    extends State<SuggestionScreen> {
 
   final _scrollController = ScrollController();
 
@@ -82,6 +86,16 @@ class _SuggestionPageState
                 ),
                 onTap: () {
                   // Navigate to Chat Screen
+                  context.read<ChatBloc>().add(
+                    PrefillMessage(
+                      suggestion.title,
+                    ),
+                  );
+
+                  context.go(
+                     AppRoutes.chat,
+                    extra: suggestion.title,
+                  );
                 },
               );
             },

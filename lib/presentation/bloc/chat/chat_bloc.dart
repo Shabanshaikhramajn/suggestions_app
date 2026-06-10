@@ -7,40 +7,67 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(const ChatState()) {
     on<SendMessage>(_sendMessage);
     on<LoadChatHistory>(_loadHistory);
+    on<PrefillMessage>(_prefillMessage);
   }
-
-  Future<void> _sendMessage(SendMessage event, Emitter<ChatState> emit) async {
+  Future<void> _sendMessage(
+      SendMessage event,
+      Emitter<ChatState> emit,
+      ) async {
     try {
       final userMessage = ChatMessageModel(
         sender: 'user',
         message: event.message,
       );
 
+      final updatedMessages = [
+        ...state.messages,
+        userMessage,
+      ];
+
       emit(
         state.copyWith(
-          messages: [...state.messages, userMessage],
+          messages: updatedMessages,
           isLoading: true,
         ),
       );
 
-      await Future.delayed(const Duration(seconds: 1));
-
-      String reply = _generateReply(event.message);
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
 
       final assistantMessage = ChatMessageModel(
         sender: 'assistant',
-        message: reply,
+        message: _generateReply(event.message),
       );
 
       emit(
         state.copyWith(
-          messages: [...state.messages, assistantMessage],
+          messages: [
+            ...updatedMessages,
+            assistantMessage,
+          ],
           isLoading: false,
         ),
       );
     } catch (e) {
-      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          errorMessage: e.toString(),
+        ),
+      );
     }
+  }
+
+  void _prefillMessage(
+      PrefillMessage event,
+      Emitter<ChatState> emit,
+      ) {
+    emit(
+      state.copyWith(
+        draftMessage: event.message,
+      ),
+    );
   }
 
   Future<void> _loadHistory(
