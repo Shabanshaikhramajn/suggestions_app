@@ -59,25 +59,34 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-   return BlocListener<ChatBloc, ChatState>(
-        listenWhen: (previous, current) =>
-        previous.messages.length !=
-            current.messages.length,
-        listener: (context, state) {
-          WidgetsBinding.instance
-              .addPostFrameCallback((_) {
+    return MultiBlocListener(
+        listeners: [
+          BlocListener<ChatBloc, ChatState>(
+            listenWhen: (previous, current) =>
+            previous.messages.length != current.messages.length,
+            listener: (context, state) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (_scrollController.hasClients) {
+                  _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
+                }
+              });
+            },
+          ),
 
-            if (_scrollController.hasClients) {
-              _scrollController.animateTo(
-                _scrollController.position.maxScrollExtent,
-                duration: const Duration(
-                  milliseconds: 300,
-                ),
-                curve: Curves.easeOut,
-              );
-            }
-          });
-        },
+          BlocListener<ChatBloc, ChatState>(
+            listenWhen: (previous, current) =>
+            previous.draftMessage != current.draftMessage,
+            listener: (context, state) {
+              if (state.draftMessage != null) {
+                _messageController.text = state.draftMessage!;
+              }
+            },
+          ),
+        ],
         child: Scaffold(
           appBar: AppBar(
             title: const Text("Smart Assistant"),

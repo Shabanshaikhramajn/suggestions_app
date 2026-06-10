@@ -28,6 +28,8 @@ class _SuggestionScreenState
     _scrollController.addListener(_onScroll);
   }
 
+
+
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
@@ -85,12 +87,15 @@ class _SuggestionScreenState
                   suggestion.description,
                 ),
                 onTap: () {
-                  // Navigate to Chat Screen
                   context.read<ChatBloc>().add(
-                    PrefillMessage(
-                      suggestion.title,
-                    ),
+                    StartNewChat(suggestion.title),
                   );
+                  // Navigate to Chat Screen
+                  // context.read<ChatBloc>().add(
+                  //   PrefillMessage(
+                  //     suggestion.title,
+                  //   ),
+                  // );
 
                   context.go(
                      AppRoutes.chat,

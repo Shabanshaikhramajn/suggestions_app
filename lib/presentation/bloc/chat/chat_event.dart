@@ -24,3 +24,11 @@ class PrefillMessage extends ChatEvent {
   const PrefillMessage(this.message);
 }
 class ClearDraft extends ChatEvent {}
+
+class ClearChat extends ChatEvent {}
+
+class StartNewChat extends ChatEvent {
+  final String message;
+
+  const StartNewChat(this.message);
+}

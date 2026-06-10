@@ -1,4 +1,5 @@
 class AppConstants {
+   static const String Apikey = "AIzaSyCQJuULKkGitaTgzXJs3BKibDG42EkTXlk";
   static const List<Map<String, String>> mockSuggestions = [
     {
       "title": "Explain Flutter state management",
