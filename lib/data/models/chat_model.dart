@@ -4,7 +4,6 @@ part 'chat_model.g.dart';
 
 @HiveType(typeId: 0)
 class ChatMessageModel {
-
   @HiveField(0)
   final String sender;
 
@@ -14,9 +13,13 @@ class ChatMessageModel {
   @HiveField(2)
   final DateTime timestamp;
 
+  @HiveField(3)
+  final String conversationId;
+
   ChatMessageModel({
     required this.sender,
     required this.message,
     required this.timestamp,
+    required this.conversationId,
   });
 }

@@ -1,12 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:chat_app/domain/entity/suggestions_entity.dart';
 
-enum SuggestionStatus {
-  initial,
-  loading,
-  success,
-  failure,
-}
+enum SuggestionStatus { initial, loading, success, failure }
 
 class SuggestionState extends Equatable {
   final SuggestionStatus status;
@@ -32,9 +27,5 @@ class SuggestionState extends Equatable {
   }
 
   @override
-  List<Object> get props => [
-        status,
-        suggestions,
-        hasReachedMax,
-      ];
+  List<Object> get props => [status, suggestions, hasReachedMax];
 }

@@ -6,12 +6,14 @@ class ChatState {
   final bool isLoading;
   final String? draftMessage;
   final String? errorMessage;
+  final String? currentConversationId;
 
   const ChatState({
     this.messages = const [],
     this.isLoading = false,
     this.draftMessage,
     this.errorMessage,
+    this.currentConversationId,
   });
 
   ChatState copyWith({
@@ -19,12 +21,15 @@ class ChatState {
     bool? isLoading,
     String? draftMessage,
     String? errorMessage,
+    String? currentConversationId,
   }) {
     return ChatState(
       messages: messages ?? this.messages,
       isLoading: isLoading ?? this.isLoading,
       draftMessage: draftMessage,
       errorMessage: errorMessage ?? this.errorMessage,
+      currentConversationId:
+          currentConversationId ?? this.currentConversationId,
     );
   }
 }

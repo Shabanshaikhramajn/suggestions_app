@@ -1,5 +1,3 @@
 abstract class GeminiRemoteDataSource {
-  Future<String> sendMessage(
-      String message,
-      );
+  Future<String> sendMessage(String message);
 }

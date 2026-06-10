@@ -8,9 +8,7 @@ abstract class SuggestionRemoteDataSource {
   });
 }
 
-class SuggestionRemoteDataSourceImpl
-    implements SuggestionRemoteDataSource {
-
+class SuggestionRemoteDataSourceImpl implements SuggestionRemoteDataSource {
   @override
   Future<List<SuggestionModel>> getSuggestions({
     required int page,
@@ -24,8 +22,10 @@ class SuggestionRemoteDataSourceImpl
       return [];
     }
 
-    final endIndex =
-    (startIndex + limit).clamp(0, AppConstants.mockSuggestions.length);
+    final endIndex = (startIndex + limit).clamp(
+      0,
+      AppConstants.mockSuggestions.length,
+    );
 
     return AppConstants.mockSuggestions
         .sublist(startIndex, endIndex)
@@ -33,11 +33,11 @@ class SuggestionRemoteDataSourceImpl
         .entries
         .map(
           (entry) => SuggestionModel(
-        id: startIndex + entry.key + 1,
-        title: entry.value['title']!,
-        description: entry.value['description']!,
-      ),
-    )
+            id: startIndex + entry.key + 1,
+            title: entry.value['title']!,
+            description: entry.value['description']!,
+          ),
+        )
         .toList();
   }
 }

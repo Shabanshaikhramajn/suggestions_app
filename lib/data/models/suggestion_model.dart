@@ -1,4 +1,3 @@
-
 import 'package:chat_app/domain/entity/suggestions_entity.dart';
 
 class SuggestionModel extends Suggestion {

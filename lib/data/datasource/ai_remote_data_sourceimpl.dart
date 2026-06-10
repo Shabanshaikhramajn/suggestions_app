@@ -1,5 +1,4 @@
 import 'package:chat_app/data/datasource/ai_datasource.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiRemoteDataSourceImpl
@@ -12,20 +11,28 @@ class GeminiRemoteDataSourceImpl
   @override
   Future<String> sendMessage(String message) async {
     try {
-      print('Calling Gemini...');
+      return await _generate(message);
+    } catch (e) {
 
-      final response = await model.generateContent([
-        Content.text(message),
-      ]);
+      // Retry once after 2 seconds
+      await Future.delayed(
+        const Duration(seconds: 2),
+      );
 
-      debugPrint('Gemini response received');
-
-      return response.text ?? 'No response generated.';
-    } catch (e, stackTrace) {
-      debugPrint('Gemini Error: $e');
-      debugPrint(stackTrace.toString());
-
-      rethrow;
+      try {
+        return await _generate(message);
+      } catch (e) {
+        rethrow;
+      }
     }
+  }
+
+  Future<String> _generate(String message) async {
+    final response = await model.generateContent([
+      Content.text(message),
+    ]);
+
+    return response.text ??
+        'No response generated.';
   }
 }

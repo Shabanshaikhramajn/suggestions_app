@@ -1,5 +1,8 @@
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class AppConstants {
-   static const String Apikey = "";
+   static  String Apikey = dotenv.env['GEMINI_API_KEY'] ?? '';
   static const List<Map<String, String>> mockSuggestions = [
     {
       "title": "Explain Flutter state management",

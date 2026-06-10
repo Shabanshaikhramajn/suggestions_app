@@ -1,6 +1,4 @@
 import 'package:chat_app/core/network/api_client.dart';
-import 'package:chat_app/core/network/endpoints.dart';
-import 'package:chat_app/data/models/chat_model.dart';
 
 class AssistantRemoteDataSource {
   final ApiClient client;
@@ -33,6 +31,4 @@ class AssistantRemoteDataSource {
   //       .toList();
   // }
   //
-
-  
 }
