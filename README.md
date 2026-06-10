@@ -2,7 +2,15 @@
 
 ## Screenshots
 
-[Suggestions](https://via.placeholder.com/200x400?text=Suggestions) | ![Chat](https://via.placeholder.com/200x400?text=Chat) | ![History](https://via.placeholder.com/200x400?text=History) |
+<img width="1080" height="2400" alt="Screenshot_20260610_235311" src="https://github.com/user-attachments/assets/3b3f7b9f-9331-4800-a99a-8259878acd7c" />
+<img width="1080" height="2400" alt="Screenshot_20260610_235238" src="https://github.com/user-attachments/assets/6034594f-016c-4091-b1f8-f94ba50052f3" />
+
+https://github.com/user-attachments/assets/2eba26d6-5e49-4379-a163-e4e018dfe964
+
+<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2026-06-10 at 23 20 56" src="https://github.com/user-attachments/assets/7146b5c7-b78f-4695-a535-3de867819af1" />
+<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2026-06-10 at 23 20 53" src="https://github.com/user-attachments/assets/92068067-33f0-42dd-919f-17362a17b995" />
+<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2026-06-10 at 23 20 39" src="https://github.com/user-attachments/assets/6ada66bd-0952-4b53-90e8-b00ae34c4fbf" />
+
 
 
 A  Flutter application that provides AI-powered chat capabilities, a paginated suggestion system, and local chat history using 
